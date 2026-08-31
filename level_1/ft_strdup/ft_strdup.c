@@ -1,55 +1,38 @@
 #include<stdlib.h>
-
-int ft_strlen(char *str)
+char    *ft_strdup(char *src)
 {
 	int i = 0;
-	while(str[i])
+	char *res;
+	int len = 0;
+	while(len[src])
 	{
-		i++;
+		len++;
 	}
-	return(i);
-}
-char *ft_strdup(char *src)
-{
-	int len = ft_strlen(src);
-	int i = 0;
-	char *new_line ;
-
-	new_line = malloc (sizeof(char) * (len + 1));
-	if (new_line == NULL)
-	return (NULL);
+	res =malloc(sizeof(char) * (len + 1));
+	if(res == NULL)
+	{
+		return(NULL);
+	}
 	while(src[i])
 	{
-		new_line[i] = src[i];
+		res[i] = src[i];
 		i++;
 	}
-	new_line[i] = '\0';
-    return (new_line);
+	res[i]= '\0';
+	return(res);
 }
-#include <stdio.h>  // printf için
-#include <stdlib.h> // malloc için
-
-// Yazdığın fonksiyonun prototipi
-char *ft_strdup(char *src);
-
-int main(void)
+#include<stdio.h>
+int main()
 {
-    char *orijinal = "42Kocaeli";
-    char *kopya;
+    char s[] = "emre";
 
-    // Fonksiyonumuzu çağırıp orijinal string'i kopyalıyoruz
-    kopya = ft_strdup(orijinal);
+    // char d[] değil, char *d olmalı. Kopyalanacak kelime de 's'
+    char *d = ft_strdup(s);
 
-    // 1. Kontrol: Kopyalama başarılı oldu mu?
-    printf("Orijinal Kelime: %s\n", orijinal);
-    printf("Kopyalanan Kelime: %s\n\n", kopya);
+    printf("%s\n", d);
 
-    // 2. Kontrol: Hafıza adresleri farklı mı? (Farklı olması gerekir!)
-    printf("Orijinalin RAM Adresi: %p\n", (void *)orijinal);
-    printf("Kopyanın RAM Adresi:    %p\n", (void *)kopya);
+    // İşimiz bitince ayırdığımız hafızayı iade ediyoruz
+    free(d);
 
-    // Malloc ile yer ayırdığımız için işimiz bitince hafızayı özgür bırakıyoruz
-    free(kopya);
-
-    return (0);
+    return (0); // main fonksiyonunu kapatmayı unutmuyoruz
 }
