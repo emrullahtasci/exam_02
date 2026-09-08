@@ -1,45 +1,50 @@
 #include <unistd.h>
 
-int main(int args, char **argv)
+void str_capitalizer (char *str)
 {
-    // Eğer hiç argüman yoksa sadece \n basıp bitiriyoruz
-    if (args < 2)
-    {
-        write(1, "\n", 1);
-        return (0);
-    }
+    int i = 0;
 
-    int j = 1; // argv[0] program adıdır, argümanlar 1'den başlar knk
-    while (j < args) // Gelen tüm argümanları tek tek geziyoruz
+    while(str[i])
     {
-        int i = 0; // Her yeni string'e geçtiğimizde harf sayacını sıfırlıyoruz
-
-        while (argv[j][i]) // String'in sonuna kadar harf harf dönüyoruz
+        if(str[i] >= 'A' && str[i] <= 'Z')
         {
-            // Senin kurduğun ilk harf şartı: i == 0 veya bir önceki karakter boşluk/tab ise
-            if (i == 0 || argv[j][i - 1] == ' ' || argv[j][i - 1] == '\t')
-            {
-                if (argv[j][i] >= 'a' && argv[j][i] <= 'z')
-                {
-                    argv[j][i] = argv[j][i] - 32;
-                }
-            }
-            else
-            {
-
-                if (argv[j][i] >= 'A' && argv[j][i] <= 'Z')
-                {
-                    argv[j][i] = argv[j][i] + 32;
-                }
-            }
-
-            // Harfi anında ekrana basıyoruz
-            write(1, &argv[j][i], 1);
+            str[i] = str[i] + 32;
+        }
+        if(str[i] >= 'a' && str[i] <= 'z' && (i == 0 || str[i - 1] == ' ' || str[i - 1] =='\t'))
+        {
+            str[i] = str[i] - 32;
+        }
+        write(1,&str[i],1);
+        i++;
+    }
+}
+int main(int args , char **argv)
+{
+    if(args == 1)
+    {
+        write(1,"\n",1);
+    }
+    else
+    {
+        int i = 1;
+        while( i < args)
+        {
+            str_capitalizer(argv[i]);
+            write(1,"\n",1);
             i++;
         }
-
-        write(1, "\n", 1);
-        j++;
+        return(0);
     }
-    return (0);
+        
+
+
+
+
+
+
+
+        
+   
+    
+    
 }
