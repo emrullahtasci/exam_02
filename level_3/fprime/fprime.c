@@ -22,7 +22,7 @@ int main(int args, char **argv)
 
                 printf("%d",i);
                 sayi = sayi / i;
-                i = 2;
+                
                 if(sayi > 1)
                 {
                     printf("*");
