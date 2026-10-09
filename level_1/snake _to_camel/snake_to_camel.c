@@ -1,39 +1,30 @@
-#include<unistd.h>
-int main(int args,char **argv)
+#include <unistd.h>
+
+int	main(int argc, char **argv)
 {
-	int buyuk_yap = 0;
-	if(args == 2)
+	int		i;
+	int		flag;
+	char	c;
+
+	i = 0;
+	flag = 0;
+	if (argc == 2)
 	{
-		int i = 0;
-		while(argv[1][i] != '\0')
+		while (argv[1][i])
 		{
-			if(argv[1][i] == '_')
-			{
-				buyuk_yap = 1;
-
-				
-
-			}
+			c = argv[1][i];
+			if (c == '_')
+				flag = 1;
 			else
 			{
-				if(buyuk_yap == 1)
-				{
-					char c = argv[1][i] - 32;
-					write(1,&c,1);
-					buyuk_yap = 0;
-				}
-				else
-				{
-					write(1,&argv[1][i],1);
-
-				}
-
+				if (flag == 1 && c >= 'a' && c <= 'z')
+					c = c - 32;
+				write(1, &c, 1);
+				flag = 0;
 			}
-			
 			i++;
-
 		}
 	}
-	write(1,"\n",1);
-
+	write(1, "\n", 1);
+	return (0);
 }

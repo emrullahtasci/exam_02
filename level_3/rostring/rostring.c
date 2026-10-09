@@ -1,48 +1,67 @@
 #include <unistd.h>
+#include <stdlib.h>
+
+char	**ft_split(char *str)
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	res = (char **)malloc(sizeof(char *) * 1000);
+	while (str[i])
+	{
+		while (str[i] == ' ' || str[i] == '\t')
+			i++;
+		if (str[i] == '\0')
+			break ;
+		res[j] = (char *)malloc(1000);
+		k = 0;
+		while (str[i] && str[i] != ' ' && str[i] != '\t')
+		{
+			res[j][k] = str[i];
+			i++;
+			k++;
+		}
+		res[j][k] = '\0';
+		j++;
+	}
+	res[j] = NULL;
+	return (res);
+}
+
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
-	int	i;
-	int	first_start;
-	int	first_end;
+	char	**words;
+	int		i;
 
-	if (argc > 1)
+	if (argc >= 2)
 	{
-		i = 0;
-		// 1. En baştaki boşlukları atla
-		while (argv[1][i] == ' ' || argv[1][i] == '\t')
-			i++;
-		
-		// 2. İlk kelimenin sınırlarını kaydet
-		first_start = i;
-		while (argv[1][i] != ' ' && argv[1][i] != '\t' && argv[1][i] != '\0')
-			i++;
-		first_end = i;
-
-		// 3. Kalan diğer kelimeleri bul ve yazdır
-		while (argv[1][i] != '\0')
+		words = ft_split(argv[1]);
+		if (words[0])
 		{
-			// Kelimeler arasındaki boşlukları atla
-			while (argv[1][i] == ' ' || argv[1][i] == '\t')
-				i++;
-			
-			if (argv[1][i] != '\0') // Eğer yeni bir kelime bulduysak
+			i = 1;
+			while (words[i])
 			{
-				while (argv[1][i] != ' ' && argv[1][i] != '\t' && argv[1][i] != '\0')
-				{
-					write(1, &argv[1][i], 1);
-					i++;
-				}
-				// Kelimeden sonra araya bir boşluk at
+				ft_putstr(words[i]);
 				write(1, " ", 1);
+				i++;
 			}
-		}
-
-		// 4. En sona kaydettiğimiz ilk kelimeyi yazdır
-		while (first_start < first_end)
-		{
-			write(1, &argv[1][first_start], 1);
-			first_start++;
+			ft_putstr(words[0]);
 		}
 	}
 	write(1, "\n", 1);
